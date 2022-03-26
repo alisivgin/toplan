@@ -6,5 +6,8 @@ module.exports = {
 
   rules: {
     'react/react-in-jsx-scope': 'off',
+    'no-restricted-exports': 'off',
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': 'off',
   },
 };
