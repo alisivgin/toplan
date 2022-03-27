@@ -1,6 +1,9 @@
 import { createStyles } from '@mantine/core';
 
 const useStyles = createStyles(theme => ({
+  wrapper: {
+    display: 'flex',
+  },
   aside: {
     flex: '0 0 60px',
     backgroundColor:

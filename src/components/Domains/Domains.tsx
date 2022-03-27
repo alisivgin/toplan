@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { UnstyledButton, Tooltip } from '@mantine/core';
+import { UnstyledButton, Tooltip, Navbar } from '@mantine/core';
 import { useGetDomains } from 'containers/Shell/Shell.hooks';
 import useStyles from './Domains.style';
 
 function Domains() {
   const { data: domains, status, error } = useGetDomains();
-  console.log(domains);
   const { classes, cx } = useStyles();
   const [active, setActive] = useState('Releases');
   const domainLinks = domains.map(domain => (
@@ -22,14 +21,21 @@ function Domains() {
           [classes.mainLinkActive]: domain.label === active,
         })}
       >
+        {/* Icons will be here */}
         {/* <domain.icon /> */}
+        <h4>{domain.label[0]}</h4>
       </UnstyledButton>
     </Tooltip>
   ));
   return (
-    <div className={classes.aside}>
-      <div className={classes.logo}>{domainLinks}</div>
-    </div>
+    <Navbar>
+      <Navbar.Section grow className={classes.wrapper}>
+        <div className={classes.aside}>
+          <div className={classes.logo} />
+          {domainLinks}
+        </div>
+      </Navbar.Section>
+    </Navbar>
   );
 }
 

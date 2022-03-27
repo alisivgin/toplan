@@ -1,13 +1,21 @@
-import { useState } from 'react';
-import { Navbar, UnstyledButton, Tooltip, Title } from '@mantine/core';
 import {
-  Home2,
-  Gauge,
-  DeviceDesktopAnalytics,
-  Fingerprint,
-  CalendarStats,
+  Navbar,
+  TextInput,
+  Code,
+  UnstyledButton,
+  Badge,
+  Text,
+  Group,
+  ActionIcon,
+  Tooltip,
+} from '@mantine/core';
+import {
+  Bulb,
   User,
-  Settings,
+  Checkbox,
+  Search,
+  Plus,
+  Selector,
 } from 'tabler-icons-react';
 // import { MantineLogoSmall } from '../../shared/MantineLogo';
 
@@ -16,58 +24,62 @@ import useStyles from './InnerNavbar.style';
 interface InnerNavbarProps {}
 
 export function InnerNavbar(props: InnerNavbarProps) {
-  const { classes, cx } = useStyles();
-  const [active, setActive] = useState('Releases');
-  const [activeLink, setActiveLink] = useState('Settings');
+  const { classes } = useStyles();
 
-  const mainLinks = mainLinksMockdata.map(link => (
-    <Tooltip
-      label={link.label}
-      position="right"
-      withArrow
-      transitionDuration={0}
-      key={link.label}
-    >
-      <UnstyledButton
-        onClick={() => setActive(link.label)}
-        className={cx(classes.mainLink, {
-          [classes.mainLinkActive]: link.label === active,
-        })}
-      >
-        <link.icon />
-      </UnstyledButton>
-    </Tooltip>
+  const mainLinks = links.map(link => (
+    <UnstyledButton key={link.label} className={classes.mainLink}>
+      <div className={classes.mainLinkInner}>
+        <link.icon size={20} className={classes.mainLinkIcon} />
+        <span>{link.label}</span>
+      </div>
+      {link.notifications && (
+        <Badge size="sm" variant="filled" className={classes.mainLinkBadge}>
+          {link.notifications}
+        </Badge>
+      )}
+    </UnstyledButton>
   ));
 
-  const links = linksMockdata.map(link => (
+  const collectionLinks = collections.map(collection => (
     <a
-      className={cx(classes.link, {
-        [classes.linkActive]: activeLink === link,
-      })}
       href="/"
-      onClick={event => {
-        event.preventDefault();
-        setActiveLink(link);
-      }}
-      key={link}
+      onClick={event => event.preventDefault()}
+      key={collection.label}
+      className={classes.collectionLink}
     >
-      {link}
+      <span style={{ marginRight: 9, fontSize: 16 }}>{collection.emoji}</span>{' '}
+      {collection.label}
     </a>
   ));
 
   return (
-    <Navbar height={750} width={{ sm: 300 }}>
-      <Navbar.Section grow className={classes.wrapper}>
-        <div className={classes.aside}>
-          <div className={classes.logo} />
-          {mainLinks}
-        </div>
-        <div className={classes.main}>
-          <Title order={4} className={classes.title}>
-            {active}
-          </Title>
-          {links}
-        </div>
+    <Navbar height={700} width={{ sm: 300 }} p="md" className={classes.navbar}>
+      <TextInput
+        placeholder="Search"
+        size="xs"
+        icon={<Search size={12} />}
+        rightSectionWidth={70}
+        rightSection={<Code className={classes.searchCode}>Ctrl + K</Code>}
+        styles={{ rightSection: { pointerEvents: 'none' } }}
+        mb="sm"
+      />
+
+      <Navbar.Section className={classes.section}>
+        <div className={classes.mainLinks}>{mainLinks}</div>
+      </Navbar.Section>
+
+      <Navbar.Section className={classes.section}>
+        <Group className={classes.collectionsHeader} position="apart">
+          <Text size="xs" weight={500} color="dimmed">
+            Collections
+          </Text>
+          <Tooltip label="Create collection" withArrow position="right">
+            <ActionIcon variant="default" size={18}>
+              <Plus size={12} />
+            </ActionIcon>
+          </Tooltip>
+        </Group>
+        <div className={classes.collections}>{collectionLinks}</div>
       </Navbar.Section>
     </Navbar>
   );
@@ -75,26 +87,20 @@ export function InnerNavbar(props: InnerNavbarProps) {
 
 export default InnerNavbar;
 
-const mainLinksMockdata = [
-  { icon: Home2, label: 'Home' },
-  { icon: Gauge, label: 'Dashboard' },
-  { icon: DeviceDesktopAnalytics, label: 'Analytics' },
-  { icon: CalendarStats, label: 'Releases' },
-  { icon: User, label: 'Account' },
-  { icon: Fingerprint, label: 'Security' },
-  { icon: Settings, label: 'Settings' },
+const links = [
+  { icon: Bulb, label: 'Activity', notifications: 3 },
+  { icon: Checkbox, label: 'Tasks', notifications: 4 },
+  { icon: User, label: 'Contacts' },
 ];
 
-const linksMockdata = [
-  'Security',
-  'Settings',
-  'Dashboard',
-  'Releases',
-  'Account',
-  'Orders',
-  'Clients',
-  'Databases',
-  'Pull Requests',
-  'Open Issues',
-  'Wiki pages',
+const collections = [
+  { emoji: '👍', label: 'Sales' },
+  { emoji: '🚚', label: 'Deliveries' },
+  { emoji: '💸', label: 'Discounts' },
+  { emoji: '💰', label: 'Profits' },
+  { emoji: '✨', label: 'Reports' },
+  { emoji: '🛒', label: 'Orders' },
+  { emoji: '📅', label: 'Events' },
+  { emoji: '🙈', label: 'Debts' },
+  { emoji: '💁‍♀️', label: 'Customers' },
 ];
