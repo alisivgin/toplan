@@ -2,6 +2,7 @@ import { createStyles } from '@mantine/core';
 
 const useStyles = createStyles(theme => ({
   navbar: {
+    width: 250,
     paddingTop: 0,
   },
 
@@ -30,8 +31,7 @@ const useStyles = createStyles(theme => ({
       theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[2]
     }`,
   },
-
-  mainLinks: {
+  navbarSectionPadding: {
     paddingLeft: theme.spacing.md - theme.spacing.xs,
     paddingRight: theme.spacing.md - theme.spacing.xs,
     paddingBottom: theme.spacing.md,

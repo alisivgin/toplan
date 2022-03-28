@@ -20,40 +20,43 @@ import {
 // import { MantineLogoSmall } from '../../shared/MantineLogo';
 
 import useStyles from './InnerNavbar.style';
+import { InnerNavbarProps } from './InnerNavbar.d';
 
-interface InnerNavbarProps {}
-
-export function InnerNavbar(props: InnerNavbarProps) {
+export function InnerNavbar(props: InnerNavbarProps): JSX.Element {
   const { classes } = useStyles();
 
-  const mainLinks = links.map(link => (
-    <UnstyledButton key={link.label} className={classes.mainLink}>
+  const shortcuts = props.shortcuts.map(shortcut => (
+    <UnstyledButton key={shortcut.label} className={classes.mainLink}>
       <div className={classes.mainLinkInner}>
-        <link.icon size={20} className={classes.mainLinkIcon} />
-        <span>{link.label}</span>
+        <shortcut.icon size={20} className={classes.mainLinkIcon} />
+        <span>{shortcut.label}</span>
       </div>
-      {link.notifications && (
+      {shortcut.notifications && (
         <Badge size="sm" variant="filled" className={classes.mainLinkBadge}>
-          {link.notifications}
+          {shortcut.notifications}
         </Badge>
       )}
     </UnstyledButton>
   ));
 
-  const collectionLinks = collections.map(collection => (
+  const channels = props.channels.map(channel => (
+    // eslint-disable-next-line @next/next/no-html-link-for-pages
     <a
       href="/"
       onClick={event => event.preventDefault()}
-      key={collection.label}
+      key={channel.label}
       className={classes.collectionLink}
     >
-      <span style={{ marginRight: 9, fontSize: 16 }}>{collection.emoji}</span>{' '}
-      {collection.label}
+      <span style={{ marginRight: 9, fontSize: 16 }}>{channel.icon}</span>
+      {channel.label}
     </a>
   ));
 
   return (
-    <Navbar height={700} width={{ sm: 300 }} p="md" className={classes.navbar}>
+    <Navbar p="md" className={classes.navbar}>
+      <Navbar.Section className={classes.section}>
+        <Text>Domain Name</Text>
+      </Navbar.Section>
       <TextInput
         placeholder="Search"
         size="xs"
@@ -65,13 +68,13 @@ export function InnerNavbar(props: InnerNavbarProps) {
       />
 
       <Navbar.Section className={classes.section}>
-        <div className={classes.mainLinks}>{mainLinks}</div>
+        <div className={classes.navbarSectionPadding}>{shortcuts}</div>
       </Navbar.Section>
 
       <Navbar.Section className={classes.section}>
         <Group className={classes.collectionsHeader} position="apart">
           <Text size="xs" weight={500} color="dimmed">
-            Collections
+            Channels
           </Text>
           <Tooltip label="Create collection" withArrow position="right">
             <ActionIcon variant="default" size={18}>
@@ -79,7 +82,7 @@ export function InnerNavbar(props: InnerNavbarProps) {
             </ActionIcon>
           </Tooltip>
         </Group>
-        <div className={classes.collections}>{collectionLinks}</div>
+        <div className={classes.collections}>{channels}</div>
       </Navbar.Section>
     </Navbar>
   );

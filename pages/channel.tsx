@@ -12,7 +12,7 @@ export default function Channel() {
 
 export async function getServerSideProps(context) {
   const queryClient = await prefetchDomains();
-  console.log({ queryClient });
+  // console.log({ queryClient });
   return {
     props: {
       dehydratedState: dehydrate(queryClient),

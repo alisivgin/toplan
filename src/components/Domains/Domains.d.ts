@@ -1,12 +1,9 @@
-import { UseQueryResult } from 'react-query';
-
 export interface Domain {
+  id: string;
   icon?: any;
   label: string;
 }
 
-export type UseGetDomains = () => {
-  data: Domain[];
-  status: UseQueryResult['status'];
-  error: UseQueryResult['error'];
-};
+export interface DomainsProps {
+  domains: Domain[];
+}

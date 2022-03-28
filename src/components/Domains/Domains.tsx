@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { UnstyledButton, Tooltip, Navbar } from '@mantine/core';
-import { useGetDomains } from 'containers/Shell/Shell.hooks';
+
+import { DomainsProps } from './Domains.d';
 import useStyles from './Domains.style';
 
-function Domains() {
-  const { data: domains, status, error } = useGetDomains();
+function Domains({ domains }: DomainsProps) {
   const { classes, cx } = useStyles();
   const [active, setActive] = useState('Releases');
   const domainLinks = domains.map(domain => (
@@ -28,10 +28,10 @@ function Domains() {
     </Tooltip>
   ));
   return (
-    <Navbar>
-      <Navbar.Section grow className={classes.wrapper}>
+    <Navbar className={classes.wrapper}>
+      <Navbar.Section grow>
         <div className={classes.aside}>
-          <div className={classes.logo} />
+          {/* <div className={classes.logo} /> */}
           {domainLinks}
         </div>
       </Navbar.Section>

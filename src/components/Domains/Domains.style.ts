@@ -2,7 +2,7 @@ import { createStyles } from '@mantine/core';
 
 const useStyles = createStyles(theme => ({
   wrapper: {
-    display: 'flex',
+    width: 60,
   },
   aside: {
     flex: '0 0 60px',
@@ -11,9 +11,9 @@ const useStyles = createStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    borderRight: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[3]
-    }`,
+    // borderRight: `1px solid ${
+    //   theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[3]
+    // }`,
   },
   logo: {
     boxSizing: 'border-box',
