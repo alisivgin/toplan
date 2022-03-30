@@ -24,11 +24,10 @@ import { InnerNavbarProps } from './InnerNavbar.d';
 
 export function InnerNavbar(props: InnerNavbarProps): JSX.Element {
   const { classes } = useStyles();
-
-  const shortcuts = props.shortcuts.map(shortcut => (
+  const shortcuts = props?.shortcuts?.data.map(shortcut => (
     <UnstyledButton key={shortcut.label} className={classes.mainLink}>
       <div className={classes.mainLinkInner}>
-        <shortcut.icon size={20} className={classes.mainLinkIcon} />
+        {/* <shortcut.icon size={20} className={classes.mainLinkIcon} /> */}
         <span>{shortcut.label}</span>
       </div>
       {shortcut.notifications && (
@@ -39,7 +38,7 @@ export function InnerNavbar(props: InnerNavbarProps): JSX.Element {
     </UnstyledButton>
   ));
 
-  const channels = props.channels.map(channel => (
+  const channels = props?.channels?.data.map(channel => (
     // eslint-disable-next-line @next/next/no-html-link-for-pages
     <a
       href="/"

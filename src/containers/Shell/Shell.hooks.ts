@@ -1,6 +1,7 @@
 import { useQuery, QueryClient } from 'react-query';
 import axios from 'axios';
 
+import { Domain } from 'components/Domains/Domains.d';
 import { UseGetDomains, UseGetDomain } from './Shell.d';
 
 export const ShellKeys = {
@@ -15,21 +16,27 @@ async function getDomains() {
 }
 
 async function getDomain(id: string) {
-  const { data } = await axios.get(`http://localhost:3000/api/domains/${id}`);
+  const { data } = await axios.get(`http://localhost:3000/api/domain/${id}`);
   return data;
 }
 
 // Prefetch
-
 // See: https://react-query.tanstack.com/guides/ssr#using-nextjs
-export const prefetchDomains = async () => {
+export const prefetchShell = async (routerDomainId: string | undefined) => {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(ShellKeys.domains, getDomains);
-  return queryClient;
-};
-export const prefetchDomain = async (id: string) => {
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(ShellKeys.domains, () => getDomain(id));
+  let domainId = routerDomainId;
+
+  const domains = queryClient.getQueryData(ShellKeys.domains);
+  if (!domainId) {
+    domainId = (domains as Domain[])[0].id;
+  }
+  // else if (!domains.find(domain => domain.id === domainId)) {
+  //   return new Error(`Domain ${domainId} not found`);
+  // }
+  await queryClient.prefetchQuery(ShellKeys.domain(domainId), () =>
+    getDomain(domainId!),
+  );
   return queryClient;
 };
 
@@ -42,14 +49,11 @@ export const useGetDomains: UseGetDomains = () => {
   return { data, status, error };
 };
 
-export const useGetDomain: UseGetDomain = (id: string) => {
+export const useGetDomain: UseGetDomain = (id: string, options) => {
   const { data, status, error } = useQuery(
-    ShellKeys.domains,
+    ShellKeys.domain(id),
     () => getDomain(id),
-    {
-      retry: false,
-      initialData: [],
-    },
+    options,
   );
   return { data, status, error };
 };

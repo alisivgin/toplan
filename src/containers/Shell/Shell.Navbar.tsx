@@ -11,16 +11,15 @@ function Navbar() {
     status: domainsStatus,
     error: domainsError,
   } = useGetDomains();
-  console.log({ domains });
-  // const {
-  //   data: domain,
-  //   status: domainStatus,
-  //   error: domainError,
-  // } = useGetDomain(domains[0].id);
+  const {
+    data: domain,
+    status: domainStatus,
+    error: domainError,
+  } = useGetDomain(domains[0].id, { enabled: !!domains });
   return (
     <div className={classes.container}>
       <Domains domains={domains} />
-      {/* <InnerNavbar {...domain} /> */}
+      <InnerNavbar {...domain} />
     </div>
   );
 }

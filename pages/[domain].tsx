@@ -1,5 +1,6 @@
+import { GetServerSidePropsContext } from 'next';
 import Shell from 'containers/Shell';
-import { dehydrate } from 'react-query';
+import { dehydrate, QueryClient } from 'react-query';
 import { prefetchShell } from 'containers/Shell/Shell.hooks';
 
 export default function HomePage() {
@@ -10,13 +11,12 @@ export default function HomePage() {
   );
 }
 
-export async function getServerSideProps(context) {
-  const { router } = context;
-  // const queryClient = await prefetchShell();
+export async function getServerSideProps({ query }: GetServerSidePropsContext) {
+  const queryClient = await prefetchShell(query.domain as string);
   // console.log({ queryClient: queryClient.getQueryState(['domains']) });
   return {
     props: {
-      dehydratedState: dehydrate(queryClient),
+      dehydratedState: dehydrate(queryClient as QueryClient),
     },
   };
 }

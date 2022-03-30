@@ -1,4 +1,8 @@
-export type InnerNavbarData = { icon: string; label: string };
+export type InnerNavbarData = {
+  icon: string;
+  label: string;
+  notifications?: number;
+};
 interface Channels {
   map(arg0: (channel: any) => JSX.Element);
   label: string;
