@@ -31,6 +31,9 @@ function Header({ links = mockLinks }: HeaderProps) {
       onClick={event => {
         event.preventDefault();
         setActive(link.link);
+        document
+          .querySelector(link.link)
+          ?.scrollIntoView({ behavior: 'smooth' });
       }}
     >
       {link.label}

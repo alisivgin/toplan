@@ -1,38 +1,38 @@
-import { Gauge, Cookie, User, Message2, Lock } from 'tabler-icons-react';
+import {
+  Gauge,
+  Cookie,
+  User,
+  Message2,
+  Lock,
+  ArrowsMinimize,
+} from 'tabler-icons-react';
 
 export const MOCKDATA = [
   {
     icon: Gauge,
-    title: 'Extreme performance',
+    title: 'Create video chat easily',
     description:
-      'This dust is actually a powerful poison that will even make a pro wrestler sick, Regice cloaks itself with frigid air of -328 degrees Fahrenheit',
+      'You can start a video chat with your friends and colleagues by one click.',
   },
   {
     icon: User,
     title: 'Privacy focused',
     description:
-      'People say it can run at the same speed as lightning striking, Its icy body is so cold, it will not melt even if it is immersed in magma',
+      'We don’t track your location, we don’t share your data with anyone.',
   },
   {
-    icon: Cookie,
-    title: 'No third parties',
+    icon: ArrowsMinimize,
+    title: 'Orginize your team',
     description:
-      'They’re popular, but they’re rare. Trainers who show them off recklessly may be targeted by thieves',
+      'Track your task and make sure everyone is on the same page. You can also share files and notes with your team.',
   },
   {
     icon: Lock,
     title: 'Secure by default',
-    description:
-      'Although it still can’t fly, its jumping power is outstanding, in Alola the mushrooms on Paras don’t grow up quite right',
-  },
-  {
-    icon: Message2,
-    title: '24/7 Support',
-    description:
-      'Rapidash usually can be seen casually cantering in the fields and plains, Skitty is known to chase around after its own tail',
+    description: 'All the data is end to end encrypted.',
   },
 ];
 
-export const mockTitle = 'Integrate effortlessly with any technology stack';
+export const mockTitle = 'Plan and track tasks in one place';
 export const mockDescription =
-  'Every once in a while, you’ll see a Golbat that’s missing some fangs. This happens when hunger drives it to try biting a Steel-type Pokémon.';
+  'Everything you need to organize your team and stay on track for daily meetings. Track your progress and outcomes to your plans.';

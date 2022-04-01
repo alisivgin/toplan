@@ -53,7 +53,7 @@ function FeaturesProps({
   ));
 
   return (
-    <Container className={classes.wrapper}>
+    <Container id="features" className={classes.wrapper}>
       <Title className={classes.title}>{title}</Title>
 
       <Container size={560} p={0}>

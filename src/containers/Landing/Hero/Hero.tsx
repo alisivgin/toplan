@@ -8,6 +8,13 @@ export function Hero() {
   const { classes } = useStyles();
   const theme = useMantineTheme();
 
+  function handleOnRequest(event: React.MouseEvent<HTMLButtonElement>) {
+    event?.preventDefault();
+    document.getElementById('contact')?.scrollIntoView({
+      behavior: 'smooth',
+    });
+  }
+
   return (
     <Container className={classes.wrapper} size={1400}>
       <Dots className={classes.dots} style={{ left: 0, top: 0 }} />
@@ -35,7 +42,11 @@ export function Hero() {
         </Container>
 
         <div className={classes.controls}>
-          <Button className={classes.control} size="lg">
+          <Button
+            className={classes.control}
+            size="lg"
+            onClick={handleOnRequest}
+          >
             Request Demo
           </Button>
         </div>

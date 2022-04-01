@@ -16,7 +16,7 @@ function Contact() {
   const { classes } = useStyles();
 
   return (
-    <Container>
+    <Container id="contact">
       <Paper shadow="md" radius="lg">
         <div className={classes.wrapper}>
           <div className={classes.contacts}>
@@ -45,7 +45,7 @@ function Contact() {
                 <TextInput label="Your name" placeholder="Your name" />
                 <TextInput
                   label="Your email"
-                  placeholder="hello@mantine.dev"
+                  placeholder="hello@toplan.online"
                   required
                 />
               </SimpleGrid>

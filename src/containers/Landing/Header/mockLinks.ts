@@ -1,18 +1,10 @@
 export const mockLinks = [
   {
-    link: '/about',
+    link: '#features',
     label: 'Features',
   },
   {
-    link: '/pricing',
-    label: 'Pricing',
-  },
-  {
-    link: '/learn',
-    label: 'Learn',
-  },
-  {
-    link: '/community',
-    label: 'Community',
+    link: '#contact',
+    label: 'Contact',
   },
 ];
