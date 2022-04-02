@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { AppProps } from 'next/app';
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { getCookie, setCookies } from 'cookies-next';
+import { SessionProvider } from 'next-auth/react';
 import Head from 'next/head';
 import {
   MantineProvider,
@@ -51,7 +52,9 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
           <NotificationsProvider>
             <QueryClientProvider client={queryClient}>
               <Hydrate state={pageProps?.dehydratedState}>
-                <Component {...pageProps} />
+                <SessionProvider session={pageProps?.session}>
+                  <Component {...pageProps} />
+                </SessionProvider>
               </Hydrate>
               <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>

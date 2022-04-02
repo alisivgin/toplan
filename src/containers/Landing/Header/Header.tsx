@@ -4,6 +4,7 @@ import {
   Container,
   Group,
   Burger,
+  Button,
 } from '@mantine/core';
 import { useBooleanToggle } from '@mantine/hooks';
 // import { MantineLogo } from '../../shared/MantineLogo';
@@ -20,6 +21,11 @@ function Header({ links = mockLinks }: HeaderProps) {
   const [opened, toggleOpened] = useBooleanToggle(false);
   const [active, setActive] = useState(links[0].link);
   const { classes, cx } = useStyles();
+
+  function handleLogIn(event: React.MouseEvent<HTMLButtonElement>) {
+    event.preventDefault();
+    window.location.href = '/app/signin';
+  }
 
   const items = links.map(link => (
     <a
@@ -47,6 +53,7 @@ function Header({ links = mockLinks }: HeaderProps) {
         <Group spacing={5} className={classes.links}>
           {items}
         </Group>
+        <Button onClick={handleLogIn}>Log in</Button>
 
         <Burger
           opened={opened}
