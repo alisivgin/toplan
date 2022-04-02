@@ -23,7 +23,7 @@ export function SignInForm() {
   });
 
   function handleSendEmail({ email }: { email: string }) {
-    signIn('email', { email });
+    signIn('email', { email, redirect: false });
   }
 
   return (
