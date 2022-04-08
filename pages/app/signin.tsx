@@ -12,7 +12,7 @@ export async function getServerSideProps({ req }: GetServerSidePropsContext) {
   if (session) {
     return {
       redirect: {
-        destination: '/app/client/xyz',
+        destination: 'app/client/xyz',
       },
     };
   }

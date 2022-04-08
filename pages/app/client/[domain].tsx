@@ -2,11 +2,12 @@ import { GetServerSidePropsContext } from 'next';
 import Shell from 'containers/Shell';
 import { dehydrate, QueryClient } from 'react-query';
 import { prefetchShell } from 'containers/Shell/Shell.hooks';
+import Room from 'containers/Room';
 
 export default function HomePage() {
   return (
     <Shell>
-      <div>this is a page</div>
+      <Room />
     </Shell>
   );
 }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import {
   Header as MantineHeader,
   Container,
@@ -21,10 +22,11 @@ function Header({ links = mockLinks }: HeaderProps) {
   const [opened, toggleOpened] = useBooleanToggle(false);
   const [active, setActive] = useState(links[0].link);
   const { classes, cx } = useStyles();
+  const router = useRouter();
 
   function handleLogIn(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
-    window.location.href = '/app/signin';
+    router.push('/app/signin');
   }
 
   const items = links.map(link => (
