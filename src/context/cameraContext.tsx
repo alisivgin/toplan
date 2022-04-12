@@ -1,7 +1,7 @@
 import { createContext, useReducer, useContext } from 'react';
 
 type Action = { type: 'open' } | { type: 'close' };
-type State = { isOpen: boolean };
+type State = { isPreJoinOpen: boolean };
 type Dispatch = (action: Action) => void;
 type CameraProviderProps = { children: React.ReactNode };
 
@@ -12,10 +12,10 @@ const CameraContext = createContext<
 function cameraReducer(state: State, action: Action) {
   switch (action.type) {
     case 'open': {
-      return { isOpen: true };
+      return { isPreJoinOpen: true };
     }
     case 'close': {
-      return { isOpen: false };
+      return { isPreJoinOpen: false };
     }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
@@ -24,7 +24,7 @@ function cameraReducer(state: State, action: Action) {
 }
 
 function CameraProvider({ children }: CameraProviderProps) {
-  const [state, dispatch] = useReducer(cameraReducer, { isOpen: false });
+  const [state, dispatch] = useReducer(cameraReducer, { isPreJoinOpen: false });
   const value = { state, dispatch };
   return (
     <CameraContext.Provider value={value}>{children}</CameraContext.Provider>

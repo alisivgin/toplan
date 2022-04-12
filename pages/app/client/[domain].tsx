@@ -13,7 +13,6 @@ export default function HomePage() {
 }
 
 export async function getServerSideProps({ query }: GetServerSidePropsContext) {
-  console.log(query);
   const queryClient = await prefetchShell(query.domain as string);
   // console.log({ queryClient: queryClient.getQueryState(['domains']) });
   return {
