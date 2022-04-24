@@ -1,6 +1,7 @@
-import { Grid, ActionIcon, UnstyledButton } from '@mantine/core';
+import { Grid, ActionIcon, UnstyledButton, Button } from '@mantine/core';
 import { Video } from 'tabler-icons-react';
 import { useCamera } from 'context/cameraContext';
+import { signOut } from 'next-auth/react';
 import useStyles from './RoomHeader.style';
 
 function RoomHeader() {
@@ -19,6 +20,7 @@ function RoomHeader() {
           <Video size={24} />
         </ActionIcon>
       </UnstyledButton>
+      <Button onClick={() => signOut()}>Sign out</Button>
     </Grid>
   );
 }

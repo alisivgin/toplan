@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   TextInput,
   Paper,
@@ -5,6 +6,7 @@ import {
   Text,
   Container,
   Button,
+  LoadingOverlay,
 } from '@mantine/core';
 import { z } from 'zod';
 import { signIn } from 'next-auth/react';
@@ -15,19 +17,28 @@ const schema = z.object({
 });
 
 export function SignInForm() {
-  const { getInputProps, onSubmit } = useForm({
+  const [isSending, setIsSending] = useState(false);
+  const { getInputProps, onSubmit, setErrors } = useForm({
     schema: zodResolver(schema),
     initialValues: {
       email: '',
     },
   });
 
-  function handleSendEmail({ email }: { email: string }) {
-    signIn('email', { email, redirect: false });
+  async function handleSendEmail({ email }: { email: string }) {
+    setIsSending(true);
+    const { ok, error } = await signIn('email', {
+      email,
+      // redirect: false,
+    });
+    // if (!ok) {
+    //   setErrors({ email: error || 'Could not send email. Please try again.' });
+    // }
+    setIsSending(false);
   }
 
   return (
-    <Container size={420} my={40}>
+    <Container size={420} my={90}>
       <Title
         align="center"
         sx={theme => ({
@@ -41,8 +52,16 @@ export function SignInForm() {
         Enter your email to get a login link
       </Text>
 
-      <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+      <Paper
+        withBorder
+        shadow="md"
+        p={30}
+        mt={30}
+        radius="md"
+        sx={{ position: 'relative' }}
+      >
         <form onSubmit={onSubmit(handleSendEmail)}>
+          <LoadingOverlay visible={isSending} />
           <TextInput
             label="Email"
             placeholder="you@mantine.dev"

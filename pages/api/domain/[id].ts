@@ -20,10 +20,17 @@ const shortcuts = {
   ],
 };
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const response = {
+export async function getDomain(domainId: string) {
+  return {
     shortcuts,
     channels,
   };
+}
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
+  const response = await getDomain(req.query?.domainId as string);
   res.status(200).json(response);
 }

@@ -15,7 +15,7 @@ function Navbar() {
     data: domain,
     status: domainStatus,
     error: domainError,
-  } = useGetDomain(domains[0].id, { enabled: !!domains });
+  } = useGetDomain(domains[0]?.id, { enabled: !!domains });
   return (
     <div className={classes.container}>
       <Domains domains={domains} />

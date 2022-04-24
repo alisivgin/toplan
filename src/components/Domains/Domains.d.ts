@@ -1,7 +1,7 @@
 export interface Domain {
   id: string;
   icon?: any;
-  label: string;
+  name: string;
 }
 
 export interface DomainsProps {

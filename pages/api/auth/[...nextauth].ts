@@ -24,7 +24,19 @@ export default NextAuth({
     signIn: '/app/signin',
     signOut: '/auth/signout',
     error: '/auth/error', // Error code passed in query string as ?error=
-    verifyRequest: '/auth/verify-request', // (used for check email message)
-    newUser: '/auth/new-user', // New users will be directed here on first sign in (leave the property out if not of interest)
+    verifyRequest: '/app/verifyRequest', // (used for check email message)
+    // newUser: '/auth/new-user', // New users will be directed here on first sign in (leave the property out if not of interest)
+  },
+  callbacks: {
+    async session({ session, token, user }) {
+      // console.log(token, user, session);
+      // eslint-disable-next-line no-param-reassign
+      session.userId = user?.id;
+      return session;
+    },
+    async signIn({ user, account, profile, email, credentials }) {
+      console.log({ user, account, profile, email, credentials });
+      return true;
+    },
   },
 });

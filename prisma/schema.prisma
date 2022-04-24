@@ -1,29 +1,28 @@
 datasource db {
-    provider             = "mysql"
-    url                  = env("DATABASE_URL")
-    referentialIntegrity = "prisma"
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+    // referentialIntegrity = "prisma"
 }
 
 generator client {
-    provider        = "prisma-client-js"
-    previewFeatures = ["referentialIntegrity"]
+    provider = "prisma-client-js"
+    // previewFeatures = ["referentialIntegrity"]
 }
 
 // Auth Model
 model Account {
-    id                String    @id @default(cuid())
+    id                String  @id @default(cuid())
     userId            String
     type              String
     provider          String
     providerAccountId String
-    refresh_token     String?   @db.Text
-    access_token      String?   @db.Text
+    refresh_token     String? @db.Text
+    access_token      String? @db.Text
     expires_at        Int?
     token_type        String?
     scope             String?
-    id_token          String?   @db.Text
+    id_token          String? @db.Text
     session_state     String?
-    deleted           DateTime?
 
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -50,7 +49,7 @@ model User {
     accounts      Account[]
     sessions      Session[]
     domains       UsersOnDomains[]
-    deleted       DateTime?
+
 }
 
 model VerificationToken {
@@ -64,28 +63,17 @@ model VerificationToken {
 // Domain Model
 model Domain {
     id        String           @id @default(cuid())
-    name      String           @unique
+    name      String
     createdAt DateTime
     updatedAt DateTime
     users     UsersOnDomains[]
-    owner     Owner            @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-    ownerId   String           @unique
-    deleted   DateTime?
-}
-
-model Owner {
-    id      String    @id @default(cuid())
-    name    String    @unique
-    Domain  Domain?
-    deleted DateTime?
 }
 
 model UsersOnDomains {
-    User     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+    User     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId   String
-    Domain   Domain    @relation(fields: [domainId], references: [id], onDelete: Cascade)
+    Domain   Domain @relation(fields: [domainId], references: [id], onDelete: Cascade)
     domainId String
-    deleted  DateTime?
 
     @@id([userId, domainId])
     @@index([userId, domainId])

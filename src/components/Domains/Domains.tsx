@@ -9,21 +9,21 @@ function Domains({ domains }: DomainsProps) {
   const [active, setActive] = useState('Releases');
   const domainLinks = domains.map(domain => (
     <Tooltip
-      label={domain.label}
+      label={domain.name}
       position="right"
       withArrow
       transitionDuration={0}
-      key={domain.label}
+      key={domain.id}
     >
       <UnstyledButton
-        onClick={() => setActive(domain.label)}
+        onClick={() => setActive(domain.id)}
         className={cx(classes.mainLink, {
-          [classes.mainLinkActive]: domain.label === active,
+          [classes.mainLinkActive]: domain.id === active,
         })}
       >
         {/* Icons will be here */}
         {/* <domain.icon /> */}
-        <h4>{domain.label[0]}</h4>
+        <h4>{domain.name?.[0]}</h4>
       </UnstyledButton>
     </Tooltip>
   ));
