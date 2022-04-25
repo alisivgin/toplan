@@ -41,14 +41,14 @@ model Session {
 }
 
 model User {
-    id            String           @id @default(cuid())
+    id            String       @id @default(cuid())
     name          String?
-    email         String?          @unique
+    email         String?      @unique
     emailVerified DateTime?
     image         String?
     accounts      Account[]
     sessions      Session[]
-    domains       UsersOnDomains[]
+    domains       UserDomain[]
 
 }
 
@@ -62,14 +62,14 @@ model VerificationToken {
 
 // Domain Model
 model Domain {
-    id        String           @id @default(cuid())
+    id        String       @id @default(cuid())
     name      String
     createdAt DateTime
     updatedAt DateTime
-    users     UsersOnDomains[]
+    users     UserDomain[]
 }
 
-model UsersOnDomains {
+model UserDomain {
     User     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId   String
     Domain   Domain @relation(fields: [domainId], references: [id], onDelete: Cascade)
