@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import {
   Navbar,
   TextInput,
@@ -9,22 +10,30 @@ import {
   ActionIcon,
   Tooltip,
 } from '@mantine/core';
-import {
-  Bulb,
-  User,
-  Checkbox,
-  Search,
-  Plus,
-  Selector,
-} from 'tabler-icons-react';
-// import { MantineLogoSmall } from '../../shared/MantineLogo';
+import { Search, Plus, Hash } from 'tabler-icons-react';
+import { useRouter } from 'next/router';
+import { useCreateRoom, useGetDomain } from './InnerNavbar.hooks';
 
 import useStyles from './InnerNavbar.style';
-import { InnerNavbarProps } from './InnerNavbar.d';
+import { InnerNavbarProps, Room, Shortcuts } from './InnerNavbar.d';
 
-export function InnerNavbar(props: InnerNavbarProps): JSX.Element {
+export function InnerNavbar({
+  defaultDomainId,
+}: InnerNavbarProps): JSX.Element {
   const { classes } = useStyles();
-  const shortcuts = props?.shortcuts?.data.map(shortcut => (
+  const router = useRouter();
+
+  const domainId = router.query?.domain?.[0] || defaultDomainId;
+  const {
+    data: domain,
+    // status: domainStatus,
+    // error: domainError,
+  } = useGetDomain(domainId as string, { enabled: !!domainId });
+  const { rooms, shortcuts }: { rooms: Room[]; shortcuts: Shortcuts } = domain;
+
+  const createRooom = useCreateRoom();
+
+  const shortcutLinks = shortcuts?.map(shortcut => (
     <UnstyledButton key={shortcut.label} className={classes.mainLink}>
       <div className={classes.mainLinkInner}>
         {/* <shortcut.icon size={20} className={classes.mainLinkIcon} /> */}
@@ -38,23 +47,32 @@ export function InnerNavbar(props: InnerNavbarProps): JSX.Element {
     </UnstyledButton>
   ));
 
-  const channels = props?.channels?.data.map(channel => (
-    // eslint-disable-next-line @next/next/no-html-link-for-pages
-    <a
-      href="/"
-      onClick={event => event.preventDefault()}
-      key={channel.label}
-      className={classes.collectionLink}
-    >
-      <span style={{ marginRight: 9, fontSize: 16 }}>{channel.icon}</span>
-      {channel.label}
-    </a>
-  ));
+  const roomSection = useMemo(() => {
+    if (rooms.length === 0) {
+      return (
+        <Text className={classes.infoText} color="dimmed">
+          No Rooms yet.
+        </Text>
+      );
+    }
+    return rooms?.map(room => (
+      // eslint-disable-next-line @next/next/no-html-link-for-pages
+      <a
+        href="/"
+        onClick={event => event.preventDefault()}
+        key={room.id}
+        className={classes.collectionLink}
+      >
+        <Hash size={12} />
+        {room.name}
+      </a>
+    ));
+  }, []);
 
   return (
     <Navbar p="md" className={classes.navbar}>
       <Navbar.Section className={classes.section}>
-        <Text>Domain Name</Text>
+        <Text className={classes.domainName}>Domain Name</Text>
       </Navbar.Section>
       <TextInput
         placeholder="Search"
@@ -67,13 +85,13 @@ export function InnerNavbar(props: InnerNavbarProps): JSX.Element {
       />
 
       <Navbar.Section className={classes.section}>
-        <div className={classes.navbarSectionPadding}>{shortcuts}</div>
+        <div className={classes.navbarSectionPadding}>{shortcutLinks}</div>
       </Navbar.Section>
 
       <Navbar.Section className={classes.section}>
         <Group className={classes.collectionsHeader} position="apart">
           <Text size="xs" weight={500} color="dimmed">
-            Channels
+            Rooms
           </Text>
           <Tooltip label="Create collection" withArrow position="right">
             <ActionIcon variant="default" size={18}>
@@ -81,28 +99,10 @@ export function InnerNavbar(props: InnerNavbarProps): JSX.Element {
             </ActionIcon>
           </Tooltip>
         </Group>
-        <div className={classes.collections}>{channels}</div>
+        <div className={classes.rooms}>{roomSection}</div>
       </Navbar.Section>
     </Navbar>
   );
 }
 
 export default InnerNavbar;
-
-const links = [
-  { icon: Bulb, label: 'Activity', notifications: 3 },
-  { icon: Checkbox, label: 'Tasks', notifications: 4 },
-  { icon: User, label: 'Contacts' },
-];
-
-const collections = [
-  { emoji: '👍', label: 'Sales' },
-  { emoji: '🚚', label: 'Deliveries' },
-  { emoji: '💸', label: 'Discounts' },
-  { emoji: '💰', label: 'Profits' },
-  { emoji: '✨', label: 'Reports' },
-  { emoji: '🛒', label: 'Orders' },
-  { emoji: '📅', label: 'Events' },
-  { emoji: '🙈', label: 'Debts' },
-  { emoji: '💁‍♀️', label: 'Customers' },
-];

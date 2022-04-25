@@ -3,7 +3,6 @@ import { createStyles } from '@mantine/core';
 const useStyles = createStyles(theme => ({
   navbar: {
     width: 250,
-    paddingTop: 0,
   },
 
   section: {
@@ -80,10 +79,10 @@ const useStyles = createStyles(theme => ({
     pointerEvents: 'none',
   },
 
-  collections: {
-    paddingLeft: theme.spacing.md - 6,
-    paddingRight: theme.spacing.md - 6,
-    paddingBottom: theme.spacing.md,
+  rooms: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   collectionsHeader: {
@@ -112,6 +111,13 @@ const useStyles = createStyles(theme => ({
           : theme.colors.gray[0],
       color: theme.colorScheme === 'dark' ? theme.white : theme.black,
     },
+  },
+  domainName: {
+    marginLeft: theme.spacing.md,
+  },
+  infoText: {
+    fontSize: theme.fontSizes.sm,
+    padding: '16px',
   },
 }));
 

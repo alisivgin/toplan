@@ -1,21 +1,26 @@
-export type InnerNavbarData = {
-  icon: string;
-  label: string;
-  notifications?: number;
-};
-interface Channels {
-  map(arg0: (channel: any) => JSX.Element);
-  label: string;
-  data: InnerNavbarData[];
+import { UseQueryResult } from 'react-query';
+
+interface Room {
+  map(arg0: (room: any) => JSX.Element);
+  id: string;
+  name: string;
+  domainId: string;
 }
 
 interface Shortcuts {
   map(arg0: (shortcut: any) => JSX.Element);
   label: string;
-  data: InnerNavbarData[];
 }
 
 export interface InnerNavbarProps {
-  shortcuts: Shortcuts;
-  channels: Channels;
+  defaultDomainId: string;
 }
+
+export type UseGetDomain = (
+  id: string,
+  options: QueryObserverOptions,
+) => {
+  data: InnerNavbar;
+  status: UseQueryResult['status'];
+  error: UseQueryResult['error'];
+};
