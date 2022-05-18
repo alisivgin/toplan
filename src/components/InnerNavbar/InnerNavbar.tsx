@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import {
   Navbar,
   TextInput,
@@ -9,8 +9,11 @@ import {
   Group,
   ActionIcon,
   Tooltip,
+  Input,
+  Loader,
 } from '@mantine/core';
-import { Search, Plus, Hash } from 'tabler-icons-react';
+import { useInputState } from '@mantine/hooks';
+import { Search, Plus, Hash, SquarePlus } from 'tabler-icons-react';
 import { useRouter } from 'next/router';
 import { useCreateRoom, useGetDomain } from './InnerNavbar.hooks';
 
@@ -22,6 +25,9 @@ export function InnerNavbar({
 }: InnerNavbarProps): JSX.Element {
   const { classes } = useStyles();
   const router = useRouter();
+  const [isNewRoom, setIsNewRoom] = useState<boolean>(false);
+  const [newRoomName, setNewRoomName] = useInputState<string>('');
+  console.log(newRoomName);
 
   const domainId = router.query?.domain?.[0] || defaultDomainId;
   const {
@@ -32,6 +38,20 @@ export function InnerNavbar({
   const { rooms, shortcuts }: { rooms: Room[]; shortcuts: Shortcuts } = domain;
 
   const createRooom = useCreateRoom();
+  console.log({ createRooom });
+
+  const handleCreateRoom = () => {
+    createRooom.mutate(
+      { name: newRoomName, domainId },
+      {
+        onError: () => {
+          setTimeout(() => {
+            createRooom.reset();
+          }, 3000);
+        },
+      },
+    );
+  };
 
   const shortcutLinks = shortcuts?.map(shortcut => (
     <UnstyledButton key={shortcut.label} className={classes.mainLink}>
@@ -46,28 +66,6 @@ export function InnerNavbar({
       )}
     </UnstyledButton>
   ));
-
-  const roomSection = useMemo(() => {
-    if (rooms.length === 0) {
-      return (
-        <Text className={classes.infoText} color="dimmed">
-          No Rooms yet.
-        </Text>
-      );
-    }
-    return rooms?.map(room => (
-      // eslint-disable-next-line @next/next/no-html-link-for-pages
-      <a
-        href="/"
-        onClick={event => event.preventDefault()}
-        key={room.id}
-        className={classes.collectionLink}
-      >
-        <Hash size={12} />
-        {room.name}
-      </a>
-    ));
-  }, []);
 
   return (
     <Navbar p="md" className={classes.navbar}>
@@ -93,13 +91,66 @@ export function InnerNavbar({
           <Text size="xs" weight={500} color="dimmed">
             Rooms
           </Text>
-          <Tooltip label="Create collection" withArrow position="right">
-            <ActionIcon variant="default" size={18}>
-              <Plus size={12} />
-            </ActionIcon>
-          </Tooltip>
+          {!isNewRoom && (
+            <Tooltip label="Create Room" withArrow position="right">
+              <ActionIcon
+                variant="default"
+                size={18}
+                onClick={() => setIsNewRoom(true)}
+              >
+                <Plus size={12} />
+              </ActionIcon>
+            </Tooltip>
+          )}
         </Group>
-        <div className={classes.rooms}>{roomSection}</div>
+        <Group className={classes.rooms} position="apart">
+          {isNewRoom && (
+            <TextInput
+              value={newRoomName}
+              onChange={setNewRoomName}
+              sx={{ width: '100%' }}
+              variant="filled"
+              placeholder="New room"
+              rightSectionWidth={40}
+              error={
+                createRooom.isError ? createRooom.error?.response?.data : null
+              }
+              rightSection={
+                createRooom.isLoading ? (
+                  <Loader size="xs" />
+                ) : newRoomName.length > 0 ? (
+                  <Tooltip label="Create" withArrow position="right">
+                    <ActionIcon
+                      variant="default"
+                      size={18}
+                      onClick={handleCreateRoom}
+                    >
+                      <Plus size={12} />
+                    </ActionIcon>
+                  </Tooltip>
+                ) : null
+              }
+            />
+          )}
+
+          {rooms.length === 0 && (
+            <Text className={classes.infoText} color="dimmed">
+              No Rooms yet.
+            </Text>
+          )}
+          {rooms?.map(room => (
+            // eslint-disable-next-line @next/next/no-html-link-for-pages
+            <a
+              href="/"
+              onClick={event => event.preventDefault()}
+              key={room.id}
+              className={classes.collectionLink}
+            >
+              <Hash size={12} />
+              {room.name}
+            </a>
+          ))}
+        </Group>
       </Navbar.Section>
     </Navbar>
   );

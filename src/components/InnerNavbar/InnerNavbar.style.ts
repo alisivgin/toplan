@@ -10,6 +10,9 @@ const useStyles = createStyles(theme => ({
     marginRight: -theme.spacing.md,
     marginBottom: theme.spacing.md,
 
+    // paddingLeft: theme.spacing.md,
+    // paddingRight: theme.spacing.md,
+
     '&:not(:last-of-type)': {
       borderBottom: `1px solid ${
         theme.colorScheme === 'dark'
@@ -81,8 +84,11 @@ const useStyles = createStyles(theme => ({
 
   rooms: {
     display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingLeft: theme.spacing.md,
+    paddingRight: theme.spacing.md,
   },
 
   collectionsHeader: {

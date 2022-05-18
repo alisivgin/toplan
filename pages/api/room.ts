@@ -13,11 +13,16 @@ export default async function handler(
   }
   console.log(req.body);
   if (req.method === 'POST') {
-    const data = prisma.room.create({
-      data: {
-        ...req.body,
-      },
-    });
-    console.log({ data });
+    try {
+      const data = await prisma.room.create({
+        data: {
+          ...req.body,
+        },
+      });
+      console.log({ data });
+    } catch (error) {
+      console.log({ error });
+      res.status(500).json('Something went wrong');
+    }
   }
 }

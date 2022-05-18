@@ -9,10 +9,8 @@ async function getDomain(id: string) {
   return data;
 }
 
-async function createRoom(value: Room) {
-  const { data } = await axios.post('api/room', value);
-  return data;
-}
+const createRoom = async (value: { name: string; domainId: string }) =>
+  axios.post('api/room', value);
 
 // react query hooks
 export const useGetDomain: UseGetDomain = (id: string, options) => {
@@ -26,12 +24,10 @@ export const useGetDomain: UseGetDomain = (id: string, options) => {
 
 export const useCreateRoom = () => {
   const queryClient = useQueryClient();
-
   return useMutation(createRoom, {
     // Notice the second argument is the variables object that the `mutate` function receives
     onSuccess: (data, variables) => {
       console.log('onSuccess', data, variables);
-      // queryClient.setQueryData(['todo', { id: variables.id }], data);
       queryClient.invalidateQueries(ShellKeys.domain(variables.domainId));
     },
   });

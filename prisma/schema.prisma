@@ -66,7 +66,7 @@ model Domain {
     createdAt DateTime
     updatedAt DateTime
     users     UserDomain[]
-    rooms     DomainRoom[]
+    rooms     Room[]
 }
 
 model UserDomain {
@@ -81,21 +81,10 @@ model UserDomain {
 }
 
 model Room {
-    id        String       @id @default(cuid())
+    id        String   @id @default(cuid())
     name      String
     createdAt DateTime
     updatedAt DateTime
-    domains   DomainRoom[]
-}
-
-model DomainRoom {
-    id        String  @default(cuid())
-    Domain    Domain  @relation(fields: [domainId], references: [id], onDelete: Cascade)
+    Domain    Domain   @relation(fields: [domainId], references: [id], onDelete: Cascade)
     domainId  String
-    Room      Room    @relation(fields: [roomId], references: [id], onDelete: Cascade)
-    roomId    String
-    isCreator Boolean @default(false)
-
-    @@id([domainId, roomId])
-    @@index([domainId, roomId])
 }
