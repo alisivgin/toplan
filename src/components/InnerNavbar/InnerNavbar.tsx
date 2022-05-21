@@ -38,7 +38,6 @@ export function InnerNavbar({
   const { rooms, shortcuts }: { rooms: Room[]; shortcuts: Shortcuts } = domain;
 
   const createRooom = useCreateRoom();
-  console.log({ createRooom });
 
   const handleCreateRoom = () => {
     createRooom.mutate(

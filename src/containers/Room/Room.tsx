@@ -3,6 +3,8 @@ import VideoCall from 'components/VideoCall';
 import RoomHeader from 'components/RoomHeader';
 import { CameraProvider } from 'context/cameraContext';
 
+import Chat from 'containers/Chat';
+
 interface RoomProps {}
 function Room(props: RoomProps) {
   return (
@@ -14,7 +16,7 @@ function Room(props: RoomProps) {
             <VideoCall />
           </Grid.Col>
           <Grid.Col md={12} lg={6}>
-            2
+            <Chat />
           </Grid.Col>
         </Grid>
       </CameraProvider>

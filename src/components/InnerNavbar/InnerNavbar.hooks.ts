@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient, useMutation } from 'react-query';
-import { Room, UseGetDomain } from 'components/InnerNavbar/InnerNavbar.d';
+import { UseGetDomain } from 'components/InnerNavbar/InnerNavbar.d';
 import axios from 'lib/axios';
 import { ShellKeys } from 'containers/Shell';
 

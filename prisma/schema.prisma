@@ -63,8 +63,8 @@ model VerificationToken {
 model Domain {
     id        String       @id @default(cuid())
     name      String
-    createdAt DateTime
-    updatedAt DateTime
+    createdAt DateTime     @default(now())
+    updatedAt DateTime     @updatedAt
     users     UserDomain[]
     rooms     Room[]
 }
@@ -83,8 +83,8 @@ model UserDomain {
 model Room {
     id        String   @id @default(cuid())
     name      String
-    createdAt DateTime
-    updatedAt DateTime
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
     Domain    Domain   @relation(fields: [domainId], references: [id], onDelete: Cascade)
     domainId  String
 }

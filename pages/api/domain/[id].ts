@@ -19,18 +19,13 @@ const shortcuts = [
 ];
 
 export async function getDomain(domainId: string) {
-  const rooms = await prisma.domain.findMany({
+  const rooms = await prisma.room.findMany({
     select: {
       id: true,
       name: true,
-      rooms: {
-        select: {
-          id: true,
-        },
-      },
     },
     where: {
-      id: domainId,
+      domainId,
     },
   });
   console.log({ rooms });

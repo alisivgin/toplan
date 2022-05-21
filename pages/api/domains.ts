@@ -28,7 +28,7 @@ export async function getDomains(
         name: true,
       },
       data: {
-        name: `${`${userName}'s` || 'My'} Domain`,
+        name: userName ? `${userName}'s Domain` : 'My Domain',
         createdAt,
         updatedAt: createdAt,
         users: {
