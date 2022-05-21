@@ -4,10 +4,10 @@ import WithAvatar from 'components/WithAvatar';
 
 import useStyles from './Message.style';
 
-export default function Message() {
+export default function Message({ makeVerticalLine }) {
   const { classes } = useStyles();
   return (
-    <WithAvatar>
+    <WithAvatar makeVerticalLine={makeVerticalLine}>
       <div className={classes.container}>
         <Group className={classes.messageTitle}>
           <Group spacing="xs">
