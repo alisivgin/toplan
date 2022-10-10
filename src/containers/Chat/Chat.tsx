@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Stack } from '@mantine/core';
 
-import RichText from 'components/RichText';
+import RichText2 from 'components/RichText2';
 import Message from 'components/Message';
 import MessageThread from 'components/MessageThread';
 
@@ -10,12 +10,10 @@ function Chat(props: ChatProps) {
   const [value, onChange] = useState<string>('');
 
   return (
-    <>
-      {/* <RichText value={value} onChange={onChange} /> */}
-      <Stack>
-        <MessageThread />
-      </Stack>
-    </>
+    <Stack>
+      <RichText2 />
+      <MessageThread />
+    </Stack>
   );
 }
 

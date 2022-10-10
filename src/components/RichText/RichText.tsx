@@ -1,28 +1,23 @@
-import React, { useMemo } from 'react';
-import type { RichTextEditorProps } from '@mantine/rte';
-import RichTextEditor from './MantineRTE';
+import React from 'react';
+import { Plate, TEditableProps } from '@udecode/plate';
+import { Toolbar } from './Toolbar';
+import BasicMarkToolbarButtons from './BasicMarkToolbarButtons';
 
 import useStyles from './RichText.style';
 
-export default function RichText(props: RichTextEditorProps) {
+export default function RichText() {
   const { classes } = useStyles();
 
-  const modules = useMemo(
-    () => ({
-      // history: { delay: 2500, userOnly: true },
-      // syntax: true,
-    }),
-    [],
-  );
+  const editableProps: TEditableProps = {
+    placeholder: 'Type...',
+  };
+
   return (
-    <RichTextEditor
-      controls={[
-        ['bold', 'italic', 'strike'],
-        ['link', 'image', 'video'],
-        ['unorderedList', 'orderedList', 'blockquote'],
-      ]}
-      modules={modules}
-      {...props}
-    />
+    <>
+      <Plate editableProps={editableProps} />
+      <Toolbar>
+        <BasicMarkToolbarButtons />
+      </Toolbar>
+    </>
   );
 }

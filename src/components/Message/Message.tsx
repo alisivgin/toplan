@@ -1,10 +1,12 @@
-import { Grid, Text, Menu, Group, Container, Stack } from '@mantine/core';
+import { Text, Menu, Group, Stack } from '@mantine/core';
 import { Edit, Trash } from 'tabler-icons-react';
 import WithAvatar from 'components/WithAvatar';
 
 import useStyles from './Message.style';
 
-export default function Message({ makeVerticalLine }) {
+import { MessageProps } from './Message.d';
+
+export default function Message({ makeVerticalLine }: MessageProps) {
   const { classes } = useStyles();
   return (
     <WithAvatar makeVerticalLine={makeVerticalLine}>
